@@ -29,8 +29,7 @@ function CreateElement (obj){
         //     .appendTo($wrapperId);
 
         let layout = `
-        <div class="item ${status}">
-            <div class="background"> </div>   
+        <div class="item ${status}">  
                 <div class="carousel-caption">
                     <video src="${this.previewUrl}"> </video>
                     <h3> <a href="${this.artistViewUrl}" target="blank"> ${this.artistName}</a> </h3>
@@ -85,4 +84,8 @@ $searchButton.on('click', function(){
             // currentVideo = document.querySelector('.active video');
             })
         .catch(console.error);
+});
+
+$('#myCarousel').carousel({
+    interval: false,
 });
