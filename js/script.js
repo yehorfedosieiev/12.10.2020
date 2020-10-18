@@ -21,20 +21,21 @@ function CreateElement (obj){
         // let $a2 = $('<a>').attr('href', this.artistViewUrl).text(`${this.artistName}`).attr('target', '_blank');
         // let $h3 = $('<h3>').appendTo($a2);
         // let $video = $('<video>').attr('src', this.previewUrl);
-        // let $div3 = $('<div>').addClass('carousel-caption').append($video).append($h3).append($p);
+        // let $div3 = $('<div>').addClass('carousel-caption').append($h3).append($p);
         // let $div2 = $('<div>').addClass('background').append($div3);
         // let $div1 = $('<div>')
         //     .addClass(`item ${status}`)
+        //     .append($video)
         //     .append($div2)
         //     .appendTo($wrapperId);
 
         let layout = `
         <div class="item ${status}">  
-                <div class="carousel-caption">
-                    <video src="${this.previewUrl}"> </video>
-                    <h3> <a href="${this.artistViewUrl}" target="blank"> ${this.artistName}</a> </h3>
-                    <p> <a href="${this.trackViewUrl}" target="blank"> ${this.trackName}</a> </p>
-                </div>
+            <video src="${this.previewUrl}"> </video>
+            <div class="carousel-caption">
+                <h3> <a href="${this.artistViewUrl}" target="blank"> ${this.artistName}</a> </h3>
+                <p> <a href="${this.trackViewUrl}" target="blank"> ${this.trackName}</a> </p>
+            </div>
         </div>`;
         return layout;
     }
