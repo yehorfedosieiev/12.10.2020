@@ -3,14 +3,13 @@
 const wrapperId = document.querySelector('#wrapperId')
 const indicatorId = document.querySelector('#indicatorId')
 
-const request = fetch('https://itunes.apple.com/search?entity=musicVideo&term=eminem');
-
-const jsonPromise = request.then(result => result.ok ? result.json() : Promise.reject());
-console.log (jsonPromise);
-
 let trackAmount = 0, showAmount = 0;
 let allVideo = [], neededVideo = [];
 let arrayOfValues = ['artistName', 'trackName', 'artistViewUrl', 'trackViewUrl', 'previewUrl'];
+
+const $searchButton = $('#searchButton');
+const $input = $("#input");
+let value = '';
 
 function CreateElement (obj){
     for(let key in arrayOfValues){
@@ -44,33 +43,43 @@ function CreateElement (obj){
     }
 }
 
-jsonPromise
-    .then(item => {
-        // console.log(result);
-        const {results} = item;
-        console.log('массив результатов', results)
-        trackAmount = results.length;
-        let a = +prompt(`найдено ${trackAmount} видео.  Какое кол-во необходимо вывести`, 10);
-        a > trackAmount ? showAmount = trackAmount : showAmount = a;
-        allVideo = results;
-    })
-    .then(() => {
-        for(let i = 0; i < showAmount; i++){
-            let elementCreated = new CreateElement(allVideo[i]);
-            neededVideo.push(elementCreated);
-        }
-        console.log(neededVideo);
-        // neededVideo[0].createLayout('active');
-    })
-    .then( () => {
+$searchButton.on('click', function(){
+    // value = $("#search").val();
+    value = document.getElementById("search").value;
+    let str = "https://itunes.apple.com/search?entity=musicVideo&term=" + value;
+    const request = fetch(str);
 
-        for (let i = 0; i < showAmount; i++) {
-            let status = '';
-            !i ? status = "active" : status = '';
-
-            wrapperId.insertAdjacentHTML('beforeend', `${neededVideo[i].createLayout(status)}`);
-            indicatorId.insertAdjacentHTML('beforeend', `<li data-target="#myCarousel" ${!i ? 'class="active"': ''} data-slide-to="${i}"></li>`);
-        }
-        // currentVideo = document.querySelector('.active video');
+    const jsonPromise = request.then(result => result.ok ? result.json() : Promise.reject());
+    console.log (jsonPromise);
+    
+    jsonPromise
+        .then(item => {
+            // console.log(result);
+            const {results} = item;
+            console.log('массив результатов', results)
+            trackAmount = results.length;
+            let a = +prompt(`найдено ${trackAmount} видео.  Какое кол-во необходимо вывести`, trackAmount);
+            a > trackAmount ? showAmount = trackAmount : showAmount = a;
+            allVideo = results;
         })
-    .catch(console.error);
+        .then(() => {
+            for(let i = 0; i < showAmount; i++){
+                let elementCreated = new CreateElement(allVideo[i]);
+                neededVideo.push(elementCreated);
+            }
+            console.log(neededVideo);
+            // neededVideo[0].createLayout('active');
+        })
+        .then( () => {
+
+            for (let i = 0; i < showAmount; i++) {
+                let status = '';
+                !i ? status = "active" : status = '';
+
+                wrapperId.insertAdjacentHTML('beforeend', `${neededVideo[i].createLayout(status)}`);
+                indicatorId.insertAdjacentHTML('beforeend', `<li data-target="#myCarousel" ${!i ? 'class="active"': ''} data-slide-to="${i}"></li>`);
+            }
+            // currentVideo = document.querySelector('.active video');
+            })
+        .catch(console.error);
+});
