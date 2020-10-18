@@ -1,18 +1,12 @@
 #myCarousel {
-    height: 100vh;
     width: 100%;
+    text-decoration: none;
 }
 
 .carousel-caption {
     position: relative;
 }
 
-.carousel-inner > .item > video{
-    margin: auto;
-    height: 30vh;
-    max-width: 100%;
-}
-
-#myCarousel a:hover {
-    text-decoration: none;
+video{
+    display: block
 }

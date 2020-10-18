@@ -31,7 +31,7 @@ function CreateElement (obj){
 
         let layout = `
         <div class="item ${status}">  
-            <video src="${this.previewUrl}"> </video>
+            <video src="${this.previewUrl}" controls> </video>
             <div class="carousel-caption">
                 <h3> <a href="${this.artistViewUrl}" target="blank"> ${this.artistName}</a> </h3>
                 <p> <a href="${this.trackViewUrl}" target="blank"> ${this.trackName}</a> </p>
@@ -78,15 +78,27 @@ $searchButton.on('click', function(){
             for (let i = 0; i < showAmount; i++) {
                 let status = '';
                 !i ? status = "active" : status = '';
-
                 wrapperId.insertAdjacentHTML('beforeend', `${neededVideo[i].createLayout(status)}`);
                 indicatorId.insertAdjacentHTML('beforeend', `<li data-target="#myCarousel" ${!i ? 'class="active"': ''} data-slide-to="${i}"></li>`);
             }
-            // currentVideo = document.querySelector('.active video');
-            })
+        })
         .catch(console.error);
 });
 
 $('#myCarousel').carousel({
     interval: false,
+});
+
+let curVideo;
+let isPlay = false;
+
+$('#myCarousel').on('slid.bs.carousel', function () {
+    curVideo = document.querySelector('.active video');
+    curVideo.play();
+    isPlay = true;;
+});
+$('#myCarousel').on('slide.bs.carousel', function () {
+    curVideo = document.querySelector('.active video');
+    curVideo.pause();
+    isPlay = false;
 });
