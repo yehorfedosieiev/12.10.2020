@@ -1,15 +1,13 @@
 // const $indicatorId = $('#indicatorId');
 // const $wrapperId = $('#wrapperId');
-const wrapperId = document.querySelector('#wrapperId')
-const indicatorId = document.querySelector('#indicatorId')
-
-let trackAmount = 0, showAmount = 0;
-let allVideo = [], neededVideo = [];
-let arrayOfValues = ['artistName', 'trackName', 'artistViewUrl', 'trackViewUrl', 'previewUrl'];
-
+const wrapperId = document.querySelector('#wrapperId');
+const indicatorId = document.querySelector('#indicatorId');
 const $searchButton = $('#searchButton');
 const $input = $("#input");
-let value = '';
+
+let trackAmount = 0, showAmount = 0;
+
+let arrayOfValues = ['artistName', 'trackName', 'artistViewUrl', 'trackViewUrl', 'previewUrl'];
 
 function CreateElement (obj){
     for(let key in arrayOfValues){
@@ -18,15 +16,15 @@ function CreateElement (obj){
 
     this.createLayout = function(status){
 
-        // let $a1 = $('<a>').attr('href', obj.trackViewUrl).text(`${obj.trackName}`).attr('target', '_blank');
+        // let $a1 = $('<a>').attr('href', this.trackViewUrl).text(`${this.trackName}`).attr('target', '_blank');
         // let $p = $('<p>').append($a1);
-        // let $a2 = $('<a>').attr('href', obj.artistViewUrl).text(`${obj.artistName}`).attr('target', '_blank');
+        // let $a2 = $('<a>').attr('href', this.artistViewUrl).text(`${this.artistName}`).attr('target', '_blank');
         // let $h3 = $('<h3>').appendTo($a2);
-        // let $video = $('<video>').attr('src', obj.previewUrl);
+        // let $video = $('<video>').attr('src', this.previewUrl);
         // let $div3 = $('<div>').addClass('carousel-caption').append($video).append($h3).append($p);
         // let $div2 = $('<div>').addClass('background').append($div3);
         // let $div1 = $('<div>')
-        //     .addClass(`item ${activeStr}`)
+        //     .addClass(`item ${status}`)
         //     .append($div2)
         //     .appendTo($wrapperId);
 
@@ -44,11 +42,17 @@ function CreateElement (obj){
 }
 
 $searchButton.on('click', function(){
-    // value = $("#search").val();
-    value = document.getElementById("search").value;
+    let allVideo = [], neededVideo = [];
+
+    wrapperId.innerHTML = '';
+    indicatorId.innerHTML =  '';
+    
+    let value = '';
+    value = document.getElementById("search").value; // value = $("#search").val();
+    
     let str = "https://itunes.apple.com/search?entity=musicVideo&term=" + value;
     const request = fetch(str);
-
+    
     const jsonPromise = request.then(result => result.ok ? result.json() : Promise.reject());
     console.log (jsonPromise);
     
@@ -68,7 +72,6 @@ $searchButton.on('click', function(){
                 neededVideo.push(elementCreated);
             }
             console.log(neededVideo);
-            // neededVideo[0].createLayout('active');
         })
         .then( () => {
 
