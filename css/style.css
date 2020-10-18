@@ -1,12 +1,13 @@
 #myCarousel {
     width: 100%;
-    text-decoration: none;
-}
-
-.carousel-caption {
-    position: relative;
 }
 
 video{
-    display: block
+    display: block;
+    margin: auto;
+}
+
+.carousel-caption{
+    display: block;
+    margin: auto;
 }
