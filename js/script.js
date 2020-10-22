@@ -10,9 +10,18 @@ let trackAmount = 0, showAmount = 0;
 let arrayOfValues = ['artistName', 'trackName', 'artistViewUrl', 'trackViewUrl', 'previewUrl'];
 
 function CreateElement (obj){
-    for(let key in arrayOfValues){
-        this[arrayOfValues[key]] = obj[arrayOfValues[key]];
-    }
+    // for(let key in arrayOfValues){
+    //     this[arrayOfValues[key]] = obj[arrayOfValues[key]];
+    // }
+
+    // нижние 6 строчек можно заменить верхними 3 + 1 (объявление массива arrayOfVaues), но так нагляднее
+    const {artistName, trackName, artistViewUrl, trackViewUrl, previewUrl} = obj;
+    this.artistName = artistName;
+    this.trackName = trackName;
+    this.artistViewUrl = artistViewUrl;
+    this.trackViewUrl = trackViewUrl;
+    this.previewUrl = previewUrl;
+    //-----
 
     this.createLayout = function(status){
 
